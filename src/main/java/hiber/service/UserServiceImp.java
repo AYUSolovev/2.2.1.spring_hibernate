@@ -16,9 +16,6 @@ public class UserServiceImp implements UserService {
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private SessionFactory sessionFactory;
-
     @Transactional
     @Override
     public void add(User user) {
@@ -34,11 +31,6 @@ public class UserServiceImp implements UserService {
     @Transactional
     @Override
     public User getUserByCar(String model, int series) {
-        Query query = sessionFactory.getCurrentSession()
-                .createQuery("from User where car.model = :paramModel and car.series = :paramSeries");
-        query.setParameter("paramModel", model)
-                .setParameter("paramSeries", series);
-        List<User> user = query.list();
-        return user.get(0);
+        return userDao.getUserByCar(model, series);
     }
 }
